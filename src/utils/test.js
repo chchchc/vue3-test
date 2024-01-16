@@ -1,7 +1,6 @@
-import { useUserStore } from "@/stores/user";
+import { useUserStoreHook } from "@/store/module/user";
 
 
-export function getTestCount(){
-
-  console.log( 'test000000000',useUserStore().testCount)
+export function addCount() {
+  useUserStoreHook().addTestCount()
 }

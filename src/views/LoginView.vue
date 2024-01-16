@@ -30,11 +30,8 @@
       </el-form-item>
       <el-button :loading="loading" type="primary" size="large" @click.prevent="handleLogin">登 录</el-button>
     </el-form>
-    <div @click="createCode">获取验证码</div>
-    <!-- <div>{{ userStore.testCount }}</div>
+    <!-- <div @click="createCode">获取验证码</div> -->
 
-    <div @click="addCount">点击</div> -->
-    <div @click="getTestCount">测试setup外部调用</div>
   </div>
 </template>
 
@@ -42,9 +39,8 @@
 import { ref, reactive } from 'vue';
 import { useRouter } from "vue-router"
 import { User, Lock, Key, Picture, Loading } from "@element-plus/icons-vue"
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/store/module/user'
 import { getLoginCodeApi } from "@/api/login"
-import {getTestCount} from '@/utils/test'
 
 const router = useRouter()
 const loginFormData = reactive({
@@ -67,7 +63,6 @@ const loginFormRules = {
 
 const handleLogin = () => {
   loginFormRef.value.validate((valid, filed) => {
-    console.log('valida', valid, filed)
     if (valid) {
       loading.value = true
       useUserStore()
@@ -88,6 +83,7 @@ const handleLogin = () => {
     }
   })
 }
+// 获取生成二维码
 const createCode = () => {
   loginFormData.code = '';
   codeUrl.value = ''
@@ -96,14 +92,6 @@ const createCode = () => {
     codeUrl.value = res.data
   })
 }
-
-// createCode()
-// const count = ref(0);
-// const userStore = useUserStore();
-// console.log(userStore);
-// const addCount = () => {
-//   userStore.setTestCount(2)
-// }
 </script>
 
 <style lang="scss" scoped></style>

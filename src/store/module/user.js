@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue'
+import store from '@/store'
 import { defineStore } from 'pinia'
 import router, { resetRouter } from '@/router'
 import { getToken, removeToken, setToken } from "@/utils/cache/cookies"
@@ -11,8 +12,8 @@ export const useUserStore = defineStore('user', () => {
   const roles = ref([])
   const testCount = ref(0)
 
-  const setTestCount = (value) => {
-    testCount.value = value
+  const addTestCount = () => {
+    testCount.value++
   }
   /** 登出 */
   const logout = () => {
@@ -35,5 +36,10 @@ export const useUserStore = defineStore('user', () => {
     // todo
   }
 
-  return { token, userName, roles, testCount, setTestCount, logout, login, resetTagsView }
+  return { token, userName, roles, testCount, addTestCount, logout, login, resetTagsView }
 })
+
+/** 在setup外使用..... */
+export function useUserStoreHook() {
+  return useUserStore(store)
+}

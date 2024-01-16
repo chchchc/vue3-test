@@ -1,14 +1,14 @@
 
 import axios from 'axios';
 import { ElMessage } from 'element-plus'
-import { useUserStore } from '@/stores/user';
+import { useUserStoreHook } from '@/store/module/user';
 import { getToken } from "./cache/cookies"
 import { merge } from "lodash-es"
 
 
 // 退出登录
 function logout() {
-  const userStore = useUserStore()
+  const userStore = useUserStoreHook()
   userStore.logout()
   // 强制刷新--重定向到登录页
   window.location.reload()

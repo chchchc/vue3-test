@@ -1,5 +1,5 @@
 <script setup>
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/store/module/user';
 // 返回路由实例 相当于模板中$router
 import { useRouter } from "vue-router"
 

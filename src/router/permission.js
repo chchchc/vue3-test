@@ -1,7 +1,6 @@
 import router from '@/router'
 import { getToken } from "@/utils/cache/cookies"
-import { useUserStore } from '@/stores/user'
-// todo  疑问 useUserStore在setup外部调用如何的
+import { useUserStoreHook } from '@/store/module/user'
 const whiteListPath = ['/login'] // 白名单
 const whiteListName = [''] // 白名单
 
@@ -9,13 +8,13 @@ const isWhiteList = (to) => {
   return whiteListPath.indexOf(to.path) !== -1 || whiteListName.indexOf(to.name) !== -1
 }
 
+// pinia 实例还未被激活--报错
+// console.log('aaaaaaaaaaaaaaaaaaa',useUserStoreHook().testCount)
+
 router.beforeEach(async (to, from, next) => {
-  console.log('a', to, from,)
+  console.log('a11', to, from,)
   // 为确保 pinia 实例被激活，最简单的方法就是将 useStore() 的调用放在 pinia 安 装后才会执行的函数中。
   // 这里已经是在激活后 ---所以没毛病
-  console.log('1111', useUserStore().testCount)
-  const nownum = useUserStore().testCount+1
-  useUserStore().setTestCount(nownum)
 
   const token = getToken()
   // 没有登录
@@ -44,7 +43,6 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-  console.log('2222', useUserStore().testCount)
   console.log('afterEach', to, from)
 
 })
