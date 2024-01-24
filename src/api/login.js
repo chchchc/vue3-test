@@ -9,7 +9,7 @@ export function getLoginCodeApi() {
   })
 }
 /** 登录并返回 Token */
-export function loginApi(data) {
+export function getLogin(data) {
   return request({
     url: "users/login",
     method: "post",
@@ -17,7 +17,7 @@ export function loginApi(data) {
   })
 }
 /** 获取用户详情 */
-export function getUserInfoApi() {
+export function getUserInfo() {
   return request({
     url: "users/info",
     method: "get"

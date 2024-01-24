@@ -1,9 +1,18 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    about页面
+    <div @click="goBack">返回</div>
   </div>
 </template>
 
+<script setup>
+import {useRouter} from 'vue-router'
+const router = useRouter()
+
+const goBack = ()=>{
+  router.go(-1)
+}
+</script>
 <style>
 @media (min-width: 1024px) {
   .about {

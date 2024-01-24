@@ -3,7 +3,7 @@ import store from '@/store'
 import { defineStore } from 'pinia'
 import router, { resetRouter } from '@/router'
 import { getToken, removeToken, setToken } from "@/utils/cache/cookies"
-import { loginApi } from "@/api/login"
+import { getLogin, getUserInfo } from "@/api/login"
 
 
 export const useUserStore = defineStore('user', () => {
@@ -15,7 +15,7 @@ export const useUserStore = defineStore('user', () => {
   const addTestCount = () => {
     testCount.value++
   }
-  /** 登出 */
+  //登出
   const logout = () => {
     removeToken()
     token.value = ""
@@ -23,11 +23,28 @@ export const useUserStore = defineStore('user', () => {
     resetRouter()
     resetTagsView()
   }
-
+  //登录
   const login = ({ username, password, code }) => {
-    return loginApi({ username, password, code }).then((res) => {
+    return getLogin({ username, password, code }).then((res) => {
       setToken(res.data.token)
       token.value = res.data.token
+    })
+  }
+  //重置token
+  const resetToken = () => {
+    removeToken()
+    token.value = ""
+    roles.value = ""
+  }
+  // 设置角色
+  const setRoles = (roles) => {
+    roles.value = value
+  }
+  // 获取用户信息
+  const getLoginUserInfo = () => {
+    return getUserInfo().then((res) => {
+      roles.value = res.data.roles
+      userName.value = res.data.username
     })
   }
 
@@ -36,7 +53,19 @@ export const useUserStore = defineStore('user', () => {
     // todo
   }
 
-  return { token, userName, roles, testCount, addTestCount, logout, login, resetTagsView }
+  return {
+    token,
+    userName,
+    roles,
+    testCount,
+    addTestCount,
+    logout,
+    login,
+    resetTagsView,
+    resetToken,
+    setRoles,
+    getLoginUserInfo
+  }
 })
 
 /** 在setup外使用..... */

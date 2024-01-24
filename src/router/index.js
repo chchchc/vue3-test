@@ -1,24 +1,103 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+export const routeSettings = {
+  isAsync: true, // 动态路由,不同角色进入不同项目页面
+  defaultRoles: ["DEFAULT_ROLE"],// 默认角色
+}
 
+const Layout = () => import('@/views/Layout.vue')
 
 // 常驻路由
 export const constantRoutes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    component: Layout,
+    redirect: '/home',
+    meta: {
+      title: '首页'
+    },
+    children: [
+      {
+        path: 'home',
+        component: () => import('@/views/HomeView.vue'),
+        name: 'HomeView',
+        meta: {
+          title: '首页',
+        }
+      }
+    ]
   },
   {
     path: '/login',
-    name: 'login',
-    component: () => import('../views/LoginView.vue')
+    name: 'LoginView',
+    component: () => import('@/views/LoginView.vue'),
+    meta: {
+      title: '登录',
+      hidden: true, //不显示在菜单栏
+    }
   },
   {
     path: '/about',
-    name: 'about',
-    component: () => import('../views/AboutView.vue')
+    name: 'AboutView',
+    component: () => import('@/views/AboutView.vue'),
+    meta: {
+      title: '关于'
+    },
+    children: [
+      {
+        path: 'testMenu1',
+        name: 'TestMenu1',
+        component: () => import('@/views/TestMenu1.vue'),
+        meta: {
+          title: '测试菜单1'
+        },
+        children: [
+          {
+            path: 'testMenu1-1',
+            name: 'TestMenu11',
+            component: () => import('@/views/TestMenu11.vue'),
+            meta: {
+              title: '测试菜单1-1'
+            }
+          }
+        ]
+      }
+    ]
   }
+]
+
+// 动态路由
+export const dynamicRoutes = [
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/page',
+    name: 'Permission',
+    meta: {
+      title: '权限管理',
+      roles: ["admin", "editor"],// 可以在根路由中设置角色
+    },
+    children: [
+      {
+        path: 'page', //会被/permission/page匹配的
+        component: () => import('@/views/Permission/PagePermission.vue'),
+        name: 'PagePermission',
+        meta: {
+          title: '页面权限',
+          roles: ['admin']// 或者在子导航中设置角色
+        }
+      },
+      {
+        path: 'directive',
+        component: () => import('@/views/Permission/DirectivePermission.vue'),
+        name: 'DirectivePermission',
+        meta: {
+          title: '指令权限',// 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
+
+        }
+      }
+    ]
+  },
+
 ]
 
 const router = createRouter({

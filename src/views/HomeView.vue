@@ -9,12 +9,17 @@ const logout = ()=>{
   useUserStore().logout()
   router.push("/login")
 }
+const goAbout = ()=>{
+  router.push("/about")
+}
 </script>
 
 <template>
   <main>
-    zhuyemian
+    <div>roles:{{ useUserStore.roles }}</div>
+    <div>home页面</div>
     <div @click="logout">退出登录</div> 
+    <div @click="goAbout">去往about</div>
     <!-- <TheWelcome /> -->
   </main>
 </template>
