@@ -1,4 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
+import path, { resolve } from "path"
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -9,6 +11,13 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    //svg插件-主要插入部分
+    createSvgIconsPlugin({
+      // 指定需要缓存的图标文件夹
+      iconDirs: [path.resolve(process.cwd(), "src/icons/svg")],
+      // 指定symbolId格式
+      symbolId: "icon-[dir]-[name]"
+    })
   ],
   resolve: {
     alias: {
@@ -20,7 +29,7 @@ export default defineConfig({
     cors: true,
     proxy: {
       "/api/v1": {
-        target: "https://www.fastmock.site/mock/761e2dda2b8890ab86c928a74e8f6538",
+        target: "https://mock.mengxuegu.com/mock/63218b5fb4c53348ed2bc212",
         ws: true,
         /** 是否允许跨域 */
         changeOrigin: true

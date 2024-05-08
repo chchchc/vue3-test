@@ -22,6 +22,7 @@ export const constantRoutes = [
         name: 'HomeView',
         meta: {
           title: '首页',
+          svgIcon: "dashboard",
         }
       }
     ]

@@ -9,8 +9,12 @@ import 'element-plus/dist/index.css'
 import App from './App.vue'
 import router from './router'
 import '@/router/permission.js'
+import { loadSvg } from "@/icons"
+
 
 const app = createApp(App)
+/** 加载全局 SVG */
+loadSvg(app)
 
 /** setup外部使用pinia  
  * https://pinia.vuejs.org/zh/core-concepts/outside-component-usage.html
